@@ -74,7 +74,7 @@ window.API = {
         }),
       });
     } catch (error) {
-      console.error("Erro ao editar livro", error);
+      console.error("Erro ao  livro", error);
     }
   },
 };
