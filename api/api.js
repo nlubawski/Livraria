@@ -44,7 +44,20 @@ window.API = {
     }
   },
 
-  // deletarLivro: () => {},
+  deletarLivro: async (uid) => {
+    try {
+      await fetch(`${url}`, {
+        method: "DELETE",
+        headers,
+        body: JSON.stringify({
+          aluno,
+          uid
+        }),
+      });
+    } catch (error) {
+      console.error("Erro ao deletar livro", error);
+    }
+  },
 
   // editarLivro: () => {},
 };
