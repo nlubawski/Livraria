@@ -25,7 +25,52 @@
   //  await API.editarLivro({uid:"46315188-70ca-4d60-9206-b9e168507830",
   //  tiragem:89, titulo:"99", autor:"LLLL", descricao: "LLLLL KKKKKK JJJJJJJ" })
 
+window.addEventListener("load", () => {
+    const main = document.createElement("main");
 
+    document.body.appendChild(main);
+
+    const inputs = {
+      titulo: qwerty.input({
+        name: "titulo"
+      }),
+      autor: qwerty.input({
+        name: "autor"
+      }),
+      descricao: qwerty.input({
+        name: "descricao"
+      }),
+      tiragem: qwerty.input({
+        name: "tiragem"
+      }),
+    }
+  
+    
+    main.appendChild(
+      qwerty.form([
+      qwerty.field({
+        titulo: "Título",
+        input: inputs.titulo,
+      }),
+      qwerty.field({
+        titulo: "Autor",
+        input: inputs.autor,
+      }),
+      qwerty.field({
+        titulo: "Descrição",
+        input: inputs.descricao,
+      }),
+      qwerty.field({
+        titulo: "Tiragem",
+        input: inputs.tiragem ,
+      }),
+      qwerty.button({
+        text: "Entrar",
+        onClick: () => ()=>{}
+      })
+    ])
+    );
+  });
 
 
 
