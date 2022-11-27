@@ -59,5 +59,22 @@ window.API = {
     }
   },
 
-  // editarLivro: () => {},
+  editarLivro: async ({ uid, tiragem, titulo, autor, descricao }) => {
+    try {
+      await fetch(`${url}`, {
+        method: "PUT",
+        headers,
+        body: JSON.stringify({
+          aluno,
+          uid,
+          tiragem,
+          titulo,
+          autor,
+          descricao,
+        }),
+      });
+    } catch (error) {
+      console.error("Erro ao editar livro", error);
+    }
+  },
 };
