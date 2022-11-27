@@ -47,7 +47,6 @@
     insertContentTable(livros);
 
     function insertContentTable(livros) {
-      console.log(livros)
       livros.forEach((livro) => {
         const rowTable = tableBody.insertRow();
 
