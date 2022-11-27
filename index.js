@@ -1,29 +1,4 @@
 (async () => {
-  // for (const files of [
-  //   "/api/API",
-  //   "/qwerty/qwerty",
-  //   "/styles/styles",
-  // ]) {
-  //   const script = document.createElement("script");
-  //   script.setAttribute("src", `${files}.js`);
-  //   document.head.appendChild(script);
-  // }
-
-  // API.cadastrarLivro({
-  //   tiragem: 12,
-  //   titulo: "teste cadastrar domingo",
-  //   autor: "nl",
-  //   descricao: "bbbbb llllllll jjjjjjjj ",
-  // });
-
-  // await API.deletarLivro("ca78f8ad-76c5-4753-89e0-71c1e1ca6788")
-
-  // const livros = await API.obterLivros();
-  // console.log("livros", livros)
-
-  //  await API.editarLivro({uid:"46315188-70ca-4d60-9206-b9e168507830",
-  //  tiragem:89, titulo:"99", autor:"LLLL", descricao: "LLLLL KKKKKK JJJJJJJ" })
-
   window.addEventListener("load", async () => {
     const main = document.createElement("main");
     document.body.appendChild(main);
@@ -33,6 +8,14 @@
 
     const home = document.createElement("section");
     home.classList.add("home");
+    const cadastrar = document.createElement("div");
+    cadastrar.classList.add("cadastrar");
+    home.appendChild(cadastrar);
+    const botaoCadastrar = document.createElement("button");
+    botaoCadastrar.textContent = "Cadastrar";
+    cadastrar.addEventListener("click", (event) => cadastrarLivro(event));
+    cadastrar.appendChild(botaoCadastrar);
+
     const buscar = document.createElement("div");
     buscar.classList.add("buscar");
     home.appendChild(buscar);
@@ -101,9 +84,18 @@
     function deleteCategory(event) {
       API.deletarLivro(event.path[2].classList[0]);
     }
-    function editCategory(event) {
-      const uid = event.path[2].classList[0];
-      API.editarLivro();
+
+    function cadastrarLivro(event) {
+      document.querySelector(".home").classList.add("hide");
+      document.querySelector(".forms").classList.remove("hide");
+      const forms = document.querySelector('form')
+      forms.appendChild(
+              qwerty.button({
+          text: "Enviar",
+          funcao: (event) => cadastrarApi(event),
+        }),   )
+      document.querySelector("h1").textContent = "Cadastrar"
+   
     }
 
     (function createLinkApiGoogle() {
@@ -116,47 +108,95 @@
       document.head.appendChild(newlink);
     })();
 
-  const forms = document.createElement("section");
+    const forms = document.createElement("section");
     forms.classList.add("forms");
-    forms.classList.add("hide")
-    main.appendChild(forms)
+    forms.classList.add("hide");
+    main.appendChild(forms);
     const inputs = {
       titulo: qwerty.input({
-        name: "titulo"
+        name: "titulo",
       }),
       autor: qwerty.input({
-        name: "autor"
+        name: "autor",
       }),
       descricao: qwerty.input({
-        name: "descricao"
+        name: "descricao",
       }),
       tiragem: qwerty.input({
-        name: "tiragem"
+        name: "tiragem",
       }),
-    }
+    };
     forms.appendChild(
       qwerty.form([
-      qwerty.field({
-        titulo: "Título",
-        input: inputs.titulo,
-      }),
-      qwerty.field({
-        titulo: "Autor",
-        input: inputs.autor,
-      }),
-      qwerty.field({
-        titulo: "Descrição",
-        input: inputs.descricao,
-      }),
-      qwerty.field({
-        titulo: "Tiragem",
-        input: inputs.tiragem ,
-      }),
-      qwerty.button({
-        text: "Cadastrar",
-        onClick: () => ()=>{}
-      })
-    ])
+        qwerty.field({
+          titulo: "Título",
+          input: inputs.titulo,
+        }),
+        qwerty.field({
+          titulo: "Autor",
+          input: inputs.autor,
+        }),
+        qwerty.field({
+          titulo: "Descrição",
+          input: inputs.descricao,
+        }),
+        qwerty.field({
+          titulo: "Tiragem",
+          input: inputs.tiragem,
+        }),
+      ])
     );
   });
+
+  function cadastrarApi(event) {
+    event.preventDefault();
+    const titulo = document.querySelectorAll("input")[1].value;
+    const autor = document.querySelectorAll("input")[2].value;
+    const descricao = document.querySelectorAll("input")[3].value;
+    const tiragem = parseInt(document.querySelectorAll("input")[4].value);
+    const livro = { tiragem, titulo, autor, descricao };
+    API.cadastrarLivro(livro);
+    window.location.reload(true);
+  }
+
+  async function editCategory(event) {
+    event.preventDefault();
+    const uid = event.path[2].classList[0]; 
+    const forms = document.querySelector('form')
+    forms.appendChild(
+              qwerty.button({
+          text: "Atualizar",
+          funcao: (event) => editarApi(event,uid),
+        }),   )
+    document.querySelector("h1").textContent = "Atualizar"
+    const livros = await API.obterLivros();
+    const livro = livros.filter(item => {
+      if(item.uid === uid){
+        return item;
+      }
+    })
+
+    document.querySelector('.home').classList.add('hide');
+    document.querySelector('.forms').classList.remove('hide');
+    document.querySelectorAll("input")[1].value = livro[0].titulo;
+    document.querySelectorAll("input")[2].value = livro[0].autor;
+    document.querySelectorAll("input")[3].value = livro[0].descricao;
+    document.querySelectorAll("input")[4].value = livro[0].tiragem;
+
+    document.querySelector
+    
+  }
+
+  async function editarApi(event,uid){
+    event.preventDefault();
+    const titulo = document.querySelectorAll("input")[1].value;
+    const autor = document.querySelectorAll("input")[2].value;
+    const descricao = document.querySelectorAll("input")[3].value;
+    const tiragem = parseInt(document.querySelectorAll("input")[4].value);
+    const livro = { uid, tiragem, titulo, autor, descricao };
+    await API.editarLivro(livro);
+    window.location.reload(true);
+  }
+
+
 })();

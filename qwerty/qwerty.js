@@ -24,10 +24,10 @@ window.qwerty = {
     }
     return actions;
   },
-  button : ({text, onClick = () => {}}) => {  const button = document.createElement("button");
+  button : ({text, funcao}) => {  const button = document.createElement("button");
     button.setAttribute("type", "button");
-    button.textContent = "Enviar";
-    button.addEventListener("click", onClick)
+    button.textContent = text;
+    button.addEventListener('click', (event) => funcao(event))
     return button;
   },
   input : ({type = 'text', name}) => {

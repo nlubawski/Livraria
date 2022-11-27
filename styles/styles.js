@@ -12,7 +12,7 @@
       display: none
     }
     main{
-      margin-top:20vh;
+      margin-top:15vh;
       display:flex;
       justify-content:center;
       align-items:center;
@@ -29,10 +29,6 @@
       margin-left:1rem;
     }
     form {
-      width: 50%;
-      margin-top: calc(10vh + 10%);
-      margin-left: 25%;
-      background: #e3e3e3;
       border-radius: 20px;
       text-align: center;
     }
@@ -51,6 +47,10 @@
     .buscar{
       display: flex;
       margin-bottom: 2rem;
+    }
+    .cadastrar{
+      display: flex;
+      justify-content: center
     }
 
   `
