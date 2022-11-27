@@ -47,6 +47,7 @@
     insertContentTable(livros);
 
     function insertContentTable(livros) {
+      console.log(livros)
       livros.forEach((livro) => {
         const rowTable = tableBody.insertRow();
 
@@ -81,8 +82,9 @@
       rowTable.appendChild(cell);
     }
 
-    function deleteCategory(event) {
-      API.deletarLivro(event.path[2].classList[0]);
+    async function deleteCategory(event) {
+      await API.deletarLivro(event.path[2].classList[0]);
+      window.location.reload(true);
     }
 
     function cadastrarLivro(event) {
@@ -148,14 +150,14 @@
     );
   });
 
-  function cadastrarApi(event) {
+  async function cadastrarApi(event) {
     event.preventDefault();
     const titulo = document.querySelectorAll("input")[1].value;
     const autor = document.querySelectorAll("input")[2].value;
     const descricao = document.querySelectorAll("input")[3].value;
     const tiragem = parseInt(document.querySelectorAll("input")[4].value);
     const livro = { tiragem, titulo, autor, descricao };
-    API.cadastrarLivro(livro);
+    await API.cadastrarLivro(livro);
     window.location.reload(true);
   }
 
