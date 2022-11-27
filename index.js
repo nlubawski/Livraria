@@ -1,4 +1,4 @@
-(() => {
+(async() => {
   // for (const files of [
   //   "/api/API",
   //   "/qwerty/qwerty",
@@ -9,10 +9,15 @@
   //   document.head.appendChild(script);
   // }
 
-  API.cadastrarLivro({
-    tiragem: 12,
-    titulo: "teste cadastrar domingo",
-    autor: "nl",
-    descricao: "bbbbb llllllll jjjjjjjj ",
-  });
+  // API.cadastrarLivro({
+  //   tiragem: 12,
+  //   titulo: "teste cadastrar domingo",
+  //   autor: "nl",
+  //   descricao: "bbbbb llllllll jjjjjjjj ",
+  // });
+
+
+  const livros = await API.obterLivros();
+  console.log("livros", livros)
+
 })();
